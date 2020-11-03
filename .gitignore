@@ -1,0 +1,4 @@
+/target
+test/dm/*.int
+test/dm/*.lk
+test/dm/*.dmb
