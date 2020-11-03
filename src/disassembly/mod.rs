@@ -6,9 +6,9 @@ trait ReadContext<'a> {
     fn u8(&mut self, i: &mut u8);
     fn u16(&mut self, i: &mut u16);
     fn u32(&mut self, i: &mut u32);
-    fn f32(&mut self, f : &mut f64);
+    fn f32(&mut self, f : &mut f32);
     fn ints(&mut self, group : &mut [u32]);
-    fn floats(&mut self, group : &mut [f64]);
+    fn floats(&mut self, group : &mut [f32]);
     fn bytes(&mut self, group : &mut [u8]);
 }
 
@@ -72,17 +72,17 @@ impl<'a> ReadContext<'a> for Context<'a> {
         self.u16(&mut short);
         (*i) = ((short as u32) << 16) | lower;
     }
-    fn f32(&mut self, f: &mut f64) {
+    fn f32(&mut self, f: &mut f32) {
         let mut int: u32 = 0;
         self.u32(&mut int);
-        (*f) = int as f64;
+        (*f) = int as f32;
     }
     fn ints(&mut self, group : &mut [u32]) {
         for i in 0..group.len() {
             self.u32(&mut group[i])
         }
     }
-    fn floats(&mut self, group : &mut [f64]) {
+    fn floats(&mut self, group : &mut [f32]) {
         for i in 0..group.len() {
             self.f32(&mut group[i])
         }
