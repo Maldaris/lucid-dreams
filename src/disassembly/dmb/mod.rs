@@ -16,14 +16,14 @@ use super::ReadContext;
 use super::Readable;
 use super::Context;
 
-pub struct Dmb<'a> {
+pub struct Dmb {
     header: header::Header,
-    grid: grid::Grid<'a>,
+    grid: grid::Grid,
     total_size_of_all_strings: u32,
 }
 
-impl<'a> Dmb<'a> {
-    pub fn new() -> Dmb<'a> {
+impl<'a> Dmb {
+    pub fn new() -> Dmb {
         Dmb {
            header: header::Header::new(),
            grid: grid::Grid::new(),
@@ -31,11 +31,15 @@ impl<'a> Dmb<'a> {
         }
     }
 
-    pub fn read(&mut self, ctx: &mut Context<'a>) {
+    pub fn read(&mut self, ctx: &mut Context) {
+        ctx.section("header");
         self.header.read(ctx);
+        ctx.section("grid");
         self.grid.read(ctx);
         ctx.u32(&mut self.total_size_of_all_strings);
-        if(ctx.debug)
+        if ctx.debug {
             println!("total_size_of_all_strings: {}", self.total_size_of_all_strings);
+        }
+        
     }
 }

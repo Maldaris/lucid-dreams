@@ -39,7 +39,6 @@ impl<'a> Context<'a> {
 }
 
 impl Context<'_> {
-    
     pub fn section(&self, text: &str) {
         if self.debug {
             println!("{} + @ 0x {:X}", text, self.position)
@@ -62,16 +61,16 @@ impl<'a> ReadContext<'a> for Context<'a> {
     fn u16(&mut self, i: &mut u16) {
         let mut byte : u8 = 0;
         self.u8(&mut byte);
-        let lower = (byte & 0xFF) as u16;
+        let lower = byte as u16;
         self.u8(&mut byte);
-        (*i) = ((byte & 0xFF) as u16) << 8 | lower;
+        (*i) = (byte as u16) << 8 | lower;
     }
     fn u32(&mut self, i: &mut u32) {
         let mut short : u16 = 0;
         self.u16(&mut short);
-        let lower = (short & 0xFFFF) as u32;
+        let lower = short as u32;
         self.u16(&mut short);
-        (*i) = (((short & 0xFFFF) as u32) << 16) | lower;
+        (*i) = ((short as u32) << 16) | lower;
     }
     fn f32(&mut self, f: &mut f64) {
         let mut int: u32 = 0;
