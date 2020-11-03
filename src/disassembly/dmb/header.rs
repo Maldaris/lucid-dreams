@@ -2,8 +2,9 @@ extern crate easy_strings;
 
 use easy_strings::{EZString, ez};
 
-use super::Context;
 use super::Readable;
+use super::Context;
+use super::ReadContext;
 
 const DEFAULT_VERSION : &'static u16 = &(230 as u16);
 
@@ -25,8 +26,10 @@ impl Header {
            ex_flags: 0,
        }
     }
+}
 
-    pub fn read(&mut self, ctx: &mut Context) {
+impl Readable for Header {
+    fn read(&mut self, ctx: &mut Context) {
         let mut b : u8 = 0;
         let mut s = ez("");
         let mut shebang = ez("");
