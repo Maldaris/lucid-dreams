@@ -1,1 +1,2 @@
-mod nqcrc;
+pub mod nqcrc;
+pub mod xorjump9;

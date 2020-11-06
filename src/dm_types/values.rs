@@ -49,6 +49,52 @@ pub enum ValueTag {
 	Appearance = 0x3A,
 }
 
+impl ValueTag {
+	pub fn from_byte(byte: u8) -> ValueTag {
+		match byte {
+			0x00 => ValueTag::Null,
+			0x01 => ValueTag::Turf,
+			0x02 => ValueTag::Obj,
+			0x03 => ValueTag::Mob,
+			0x04 => ValueTag::Area,
+			0x05 => ValueTag::Client,
+			0x06 => ValueTag::String,
+		    // 0x07? Nope, apparently this is Skyfall, Bond did a runner.
+			0x08 => ValueTag::MobTypepath,
+			0x09 => ValueTag::ObjTypepath,
+			0x0A => ValueTag::TurfTypepath,
+			0x0B => ValueTag::AreaTypepath,
+			0x0C => ValueTag::Vars,
+			0x0D => ValueTag::Image,
+			0x0E => ValueTag::World,
+		
+			// Lists
+			0x0F => ValueTag::List,
+			0x2C => ValueTag::MobVars,
+			0x2D => ValueTag::ObjVars,
+			0x2E => ValueTag::TurfVars,
+			0x2F => ValueTag::AreaVars,
+			0x30 => ValueTag::ClientVars,
+			0x31 => ValueTag::Vars,
+			0x32 => ValueTag::MobOverlays,
+			0x33 => ValueTag::MobUnderlays,
+			0x34 => ValueTag::ObjOverlays,
+			0x35 => ValueTag::ObjUnderlays,
+			0x36 => ValueTag::TurfOverlays,
+			0x37 => ValueTag::TurfUnderlays,
+			0x38 => ValueTag::AreaOverlays,
+			0x39 => ValueTag::AreaUnderlays,
+			0x42 => ValueTag::ImageVars,
+		    0x51 => ValueTag::WorldVars,
+		    0x52 => ValueTag::GlobalVars,
+		
+			0x2A => ValueTag::Number,
+			0x3A => ValueTag::Appearance,
+			_ => ValueTag::Null
+		}
+	}
+}
+
 impl fmt::Display for Value {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		unsafe {

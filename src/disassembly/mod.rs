@@ -49,7 +49,6 @@ impl Context<'_> {
             return self.u32(container);
         }
         self.u16(&mut (*container as u16));
-        (*container) = (*container) & 0xFFFF;
     }
 }
 

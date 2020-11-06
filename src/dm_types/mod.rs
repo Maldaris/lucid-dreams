@@ -1,5 +1,5 @@
-mod funcs;
-mod lists;
-mod strings;
-mod values;
-mod procs;
+pub mod funcs;
+pub mod lists;
+pub mod strings;
+pub mod values;
+pub mod procs;

@@ -1,14 +1,9 @@
 use super::Readable;
 use super::Context;
 use super::ReadContext;
+use super::OBJ_NULL;
 
-const CF_MOB : u8 = 2;
-const CF_ATOM : u8 = 4;
-const CF_AREA : u8 = 8;
-
-const OBJ_NULL : u32 = 0xFFFF;
-
-struct ClassEntry {
+pub struct ClassEntry {
     name: u32,
     parent : u32,
     obj_name : u32,
@@ -52,13 +47,13 @@ struct ClassEntry {
 impl ClassEntry {
     pub fn new() -> ClassEntry {
         ClassEntry {
-            name: 0, parent: 0, obj_name: 0,
-            description: 0, icon: 0, icon_state: 0,
-            direction: 0,
-            dm_special_type_long: false, dm_special_type: 0,
-            text: 0, id_h: 0, unk_b: 0, unk_c: 0, unk_d: 0, unk_e: 0,
-            suffix: 0, flags: 0, verb_table: 0, proc_table: 0, initializer: 0,
-            initalized_vars_table: 0, var_table: 0, layer: 0.0,
+            name: OBJ_NULL, parent: OBJ_NULL, obj_name: OBJ_NULL,
+            description: OBJ_NULL, icon: OBJ_NULL, icon_state: OBJ_NULL,
+            direction: 2,
+            dm_special_type_long: false, dm_special_type: 1,
+            text: OBJ_NULL, id_h: 0, unk_b: 0, unk_c: 0, unk_d: 0, unk_e: 0,
+            suffix: OBJ_NULL, flags: 0, verb_table: OBJ_NULL, proc_table: OBJ_NULL, initializer: OBJ_NULL,
+            initalized_vars_table: OBJ_NULL, var_table: OBJ_NULL, layer: 0.0,
             has_floats: 0,
             floats: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             has_even_more_floats: 0,
@@ -66,17 +61,37 @@ impl ClassEntry {
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
             ],
-            overriding_var_list: 0
+            overriding_var_list: OBJ_NULL
         }
     }
 }
 
-struct ClassTable {
+pub struct ClassTable {
     entries: Vec<ClassEntry>
 }
 
 impl ClassTable {
+    pub fn new() -> ClassTable {
+        ClassTable { entries: Vec::new() }
+    }
+    pub fn size(&self) -> usize { self.entries.len() }
 
+    pub fn get_entry_by_index(&self, index: usize) -> Option<&ClassEntry> {
+        if index < self.entries.len() {
+            return Some(&self.entries[index])
+        } else {
+            return None;
+        }
+    }
+    pub fn get_entry_by_parent_id(&self, id: u32) -> Vec<&ClassEntry> {
+        let mut ret : Vec<&ClassEntry> = Vec::new();
+        for i in 0..self.entries.len() {
+            if self.entries[i].parent == id {
+                ret.push(&self.entries[i]);
+            }
+        }
+        ret
+    }
 }
 
 impl Readable for ClassEntry {
