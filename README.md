@@ -20,4 +20,4 @@ TODO
 
 ### LICENSE
 
-Licensed under MIT, see LICENSE.md for details.
+Licensed under AGPLv3.0, see LICENSE.md for details.
