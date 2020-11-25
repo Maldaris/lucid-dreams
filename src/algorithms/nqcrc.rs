@@ -6,7 +6,7 @@ pub fn nqcrc_hash(_hash: u32, data: &[u8]) -> u32 {
     for byte in data {
         ret = (_hash << 8) ^ NQCRC_TABLE[usize::from((_hash >> 24) as u16)] ^ ((byte ^ 0xFF) as u32)
     }
-    for 0..data.len() {
+    for _x in 0..data.len() {
         ret = (_hash << 8) ^ NQCRC_TABLE[usize::from((_hash >> 24) as u16)] ^ 0xFF;
     }
     ret
